@@ -1,0 +1,64 @@
+/*659. Split Array into Consecutive Subsequences
+Approach 
+      Get the frequency of each number in numfreq
+      Set the need of each number to 0 initially
+
+      if the current number is part of a subsequence before than we add it 
+      else  if the next three elemets are present we create a new sequence of length 3
+      else return false
+
+      Inside for loop
+              if the number frequency of a number is 0 it means the number has already been used              in before subsequences
+
+              if there a need for current element it means it is part of previous subsequence
+
+              else if the next three elements are present then we create a subsequence of size 3
+
+              else we return false
+
+      if for loop runs sucessfully return true
+*/
+class Solution {
+    public boolean isPossible(int[] nums) {
+        HashMap<Integer,Integer> numfreq=new HashMap<Integer,Integer>();
+        HashMap<Integer,Integer> need = new HashMap<Integer,Integer>();
+       for(int i: nums)
+       {
+           if(numfreq.containsKey(i) == false)
+           {
+               numfreq.put(i,0);
+               need.put(i,0);
+           }
+           numfreq.put(i,numfreq.get(i)+1);
+           
+       }
+        for(Map.Entry kk : numfreq.entrySet())
+        {
+            System.out.println(kk.getKey() + " " + kk.getValue());
+        }
+        for(int k: nums)
+        {
+            if(numfreq.get(k)==0)
+                continue;
+            if(need.get(k)>0)
+            {
+                need.put(k,need.get(k)-1);
+                numfreq.put(k,numfreq.get(k)-1);
+                if(need.containsKey(k+1)==true)
+                    need.put(k+1,need.get(k+1)+1);
+            }
+            else if((numfreq.containsKey(k)&&numfreq.containsKey(k+1)&&numfreq.containsKey(k+2) ) && numfreq.get(k)>0 && numfreq.get(k+1)>0 && numfreq.get(k+2)>0)
+            {
+                numfreq.put(k,numfreq.get(k)-1);
+                numfreq.put(k+1,numfreq.get(k+1)-1);
+                numfreq.put(k+2,numfreq.get(k+2)-1);
+                
+                if(need.containsKey(k+3) == true)
+                    need.put(k+3,need.get(k+3)+1);
+            }
+            else
+                return false;
+        }
+        return true;
+    }
+}
