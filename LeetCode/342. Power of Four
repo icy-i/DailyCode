@@ -1,0 +1,27 @@
+class Solution {
+    public boolean isPowerOfFour(int n) {
+        if(n<=0)
+        {
+            return false;
+        }
+        if(n==1)
+            return true;
+        if(n%2==1)
+            return false;
+        int i=1;
+        while(n>0)
+        {
+            n=n>>1;
+            //System.out.println(n+" "+ i);
+            int q=n/4;
+            if(q%2==1 && q!=1)
+                return false;
+            if( ( (i%2==1) && (n&1)==1 )  || (n%2==1)&&(n!=1))
+            {
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+}
