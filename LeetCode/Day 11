@@ -1,0 +1,21 @@
+326. Power of Three
+https://leetcode.com/problems/power-of-three/
+class Solution {
+    public boolean isPowerOfThree(int n) {
+        if(n<=0)
+            return false;
+        if(n==1)
+            return true;
+        int r=n%3;
+        if(r!=0)
+            return false;
+        while(n>1)
+        {
+            r=n%3;
+            n=n/3;
+            if(r!=0)
+                return false;
+        }
+        return true;
+    }
+}
