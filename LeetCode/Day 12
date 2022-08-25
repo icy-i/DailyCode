@@ -1,0 +1,22 @@
+383. Ransom Note
+https://leetcode.com/problems/ransom-note/
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int [] ap=new int[26];
+        for(int i=0;i<magazine.length();i++)
+        {
+            char k=magazine.charAt(i);
+            int f=(int)k-97;
+            ap[f]++;
+        }
+        for(int i=0;i<ransomNote.length();i++)
+        {
+            char k=ransomNote.charAt(i);
+            int f=(int)k -97;
+            ap[f]--;
+            if(ap[f]<0)
+                return false;
+        }
+        return true;
+    }
+}
