@@ -1,0 +1,149 @@
+354. Russian Doll Envelopes
+https://leetcode.com/problems/russian-doll-envelopes/
+class Solution {
+    public int maxEnvelopes(int[][] envelopes) {
+        TreeMap<Integer,ArrayList<Integer>> keep = new TreeMap<Integer,ArrayList<Integer>>();
+        int maxcolsize=0;
+        for(int i=0;i<envelopes.length;i++ )
+        {
+            int key=envelopes[i][0];
+            int value=envelopes[i][1];
+            if(keep.containsKey(key)==false)
+            {
+                keep.put(key,new ArrayList<Integer>());
+            }
+            ArrayList<Integer> rmp=keep.get(key);
+            rmp.add(value);
+            //keep.put(key,rmp);
+            int colsize=keep.get(key).size() ;
+            if(colsize> maxcolsize)
+                maxcolsize=colsize;
+        }
+        // map containing list values is stores in arraylist
+        int n=keep.values().size();
+        int m=maxcolsize;
+        ArrayList<Integer> dp=new ArrayList<>();
+        int c=-1;
+        int answer=1;
+        ArrayList<ArrayList<Integer>> finn = new ArrayList<ArrayList<Integer>>(keep.values());
+        
+        for(int i=0;i<n;i++)
+        {
+            Collections.sort(finn.get(i));
+            //System.out.println(finn.get(i));
+        }
+        dp.add(finn.get(0).get(0));
+        c++;
+        System.out.println(finn.get(0));
+        System.out.println(dp);
+        for(int i=1;i<n;i++)
+        {
+            int q=finn.get(i).size()-1;
+            for(int j=q;j>=0;j--)
+            {
+                //int ml=finn.get(i).size();
+                int s=finn.get(i).get(j);
+                if(s>dp.get(c))
+                {
+                    dp.add(s);
+                    c++;
+                }
+                else
+                {
+                    int idx=binaryceil(dp,s);
+                    if(idx!=-1  && idx!=-2)
+                    {
+                        dp.set(idx,s);
+                    }
+                }
+            }
+            //System.out.println(finn.get(i));
+            //System.out.println(dp);
+        }
+       // System.out.println(dp);
+        return c+1;
+        //ArrayList<Integer> sortedguys=new ArrayList<Integer>();
+        //Below answer TLExceded
+        /*for(int i=finn.size()-1;i>=0;i--)
+        {
+            Collections.sort(finn.get(i));
+            for(int j=finn.get(i).size()-1;j>=0;j--)
+            {
+                int k=finn.get(i).get(j);
+                if(i==finn.size()-1)
+                    dp[i][j]=1;
+                else
+                {
+                    //dp[i][j] 
+                    int ans=0;
+                    if(j!=finn.get(i).size()-1 &&  dp[i][j+1]>=finn.size()-i-1)
+                       ans=dp[i][j+1];
+                    else
+                    {
+                        for(int q=i+1;q<finn.size();q++)
+                        {
+                            int tempans=0;
+                            int mfi=finn.get(q).size()-1;
+                            int mfv=finn.get(q).get(mfi);
+                            if(mfv>k)
+                            {
+                                int redd=binaryceil(finn.get(q),k);
+                                if(redd!=-1)
+                                {
+                                    tempans=dp[q][redd];
+                                    if(tempans>ans)
+                                        ans=tempans;
+                                }
+                            }
+                            if(ans>=finn.size()-q-1)
+                                break;
+                        }
+                    }
+                    dp[i][j]=ans+1;
+                    if(dp[i][j]>answer)
+                        answer=dp[i][j];
+                }
+                //System.out.print(finn.get(i).get(j) + " ");
+            }
+        }*/
+        
+        // Convert entrySet to Array using toArray method
+        /*   Set<Map.Entry<Integer, ArrayList<Integer> > > tempSet = keep.entrySet();
+        Map.Entry<Integer, ArrayList<Integer> >[] keeparray
+            = tempSet.toArray(new Map.Entry[tempSet.size()]);
+      for(int i=0;i<keeparray.length;i++)
+      {
+          System.out.println(keeparray[i]);
+          ArrayList<Integer> kk = keeparray[i].getValue();
+          Collections.sort(kk);
+          //keeparray[i].put(keeparray[i].getKey(),kk);
+      }
+        for(int i=0;i<keeparray.length;i++)
+      {
+          System.out.println(keeparray[i]);
+      }*/
+    }
+    int binaryceil(ArrayList<Integer> array,int key)
+    {
+        int start=0;
+        int end=array.size()-1;
+        int result=-1;
+        while(start<=end)
+        {
+            int mid=start+(end-start)/2;
+            if(array.get(mid)==key)
+            {
+                return -2;
+            }
+            else if(array.get(mid)<key)
+                start=mid+1;
+            else
+            {
+                result=mid;
+                end=mid-1;
+            }   
+        }
+        return result;
+    }
+    
+}
