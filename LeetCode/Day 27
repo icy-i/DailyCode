@@ -1,0 +1,57 @@
+283. Move Zeroes
+https://leetcode.com/problems/move-zeroes/
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int zerop=0;
+        int nonzerop=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]!=0)
+            {
+                int t=nums[zerop];
+                nums[zerop]=nums[nonzerop];
+                nums[nonzerop]=t;
+                zerop++;
+                nonzerop++;
+                
+            }
+            else if(nums[i]==0)
+            {
+                nonzerop++;
+            }
+        }
+    }
+}
+
+
+
+1534. Count Good Triplets
+https://leetcode.com/problems/count-good-triplets/
+class Solution {
+    public int countGoodTriplets(int[] arr, int a, int b, int c) {
+        int ans=0;
+        for(int i=0;i<arr.length-2;i++)
+        {
+            for (int j=i+1;j<arr.length-1;j++ )
+            {
+                int za=arr[i]-arr[j];
+                if(za<0) za*=-1;
+                if(za<=a)
+                {
+                    for (int k=j+1;k<arr.length;k++)
+                    {
+                        int zb=arr[j]-arr[k];
+                        if(zb<0) zb*=-1;
+                        if(zb<=b)
+                        {
+                            int zc=arr[i]-arr[k];
+                            if(zc<0) zc*=-1;
+                            if(zc<=c) ans++;
+                        }
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
