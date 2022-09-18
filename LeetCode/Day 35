@@ -1,0 +1,49 @@
+42. Trapping Rain Water
+https://leetcode.com/problems/trapping-rain-water/
+class Solution {
+    public int trap(int[] height) {
+        int n=height.length;
+        int left[]=new int[n];
+        int right[]=new int[n];
+        int l=0;
+        int r=0;
+        for(int i=0;i<n;i++)
+        {
+            int j=n-i-1;
+            if(height[i]>=l)
+            {
+                left[i]=0;
+                l=height[i];
+            }
+            else
+            {
+                left[i]=l;
+            }
+            if(height[j]>=r)
+            {
+                right[j]=0;
+                r=height[j];
+            }
+            else
+            {
+                right[j]=r;
+            }
+        }
+        int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            l=left[i];
+            r=right[i];
+            int k=height[i];
+            int s;
+            if(l<r)
+                s=l;
+            else
+                s=r;
+            if(s!=0)
+                s-=k;
+            ans+=s;
+        }
+        return ans;
+    }
+}
