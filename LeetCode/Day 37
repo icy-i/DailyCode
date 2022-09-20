@@ -1,0 +1,15 @@
+268. Missing Number
+https://leetcode.com/problems/missing-number/
+class Solution {
+    public int missingNumber(int[] nums) {
+        int s=0;
+        int i;
+        for (i=0;i<nums.length;i++)
+        {
+            s^=i^nums[i];
+        }
+        s^=i;
+        return s;
+    }
+    
+}
