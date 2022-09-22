@@ -1,0 +1,24 @@
+557. Reverse Words in a String III
+https://leetcode.com/problems/reverse-words-in-a-string-iii/
+class Solution {
+    public String reverseWords(String s) {
+        String [] strarray=s.split(" ");
+        String ans="";
+        for(int i=0;i<strarray.length;i++)
+        {
+            ans+=strreve(strarray[i]);
+            if(i!=strarray.length-1)
+            ans+=" ";
+        }
+        return ans;
+    }
+    public String strreve(String k)
+    {
+        String ans="";
+        for(int i=k.length()-1;i>=0;i--)
+        {
+            ans+=k.charAt(i);
+        }
+        return ans;
+    }
+}
