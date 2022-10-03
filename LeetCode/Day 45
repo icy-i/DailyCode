@@ -1,0 +1,32 @@
+1578. Minimum Time to Make Rope Colorful
+https://leetcode.com/problems/minimum-time-to-make-rope-colorful/
+class Solution {
+    public int minCost(String colors, int[] neededTime) {
+        int n=neededTime.length;
+        int ans=0;
+        char prev=colors.charAt(0);
+        int m=neededTime[0];
+        int sumAlongTheWay=m;
+        for(int i=1;i<n;i++)
+        {
+            char present=colors.charAt(i);
+            if(present==prev)
+            {
+                if(neededTime[i]>m)
+                    m=neededTime[i];
+                sumAlongTheWay+=neededTime[i];
+            }
+            else
+            {
+                int tmp=sumAlongTheWay-m;
+                ans+=tmp;
+                m=neededTime[i];
+                sumAlongTheWay=m;
+                
+            }
+            prev=present;
+        }
+        ans+=sumAlongTheWay-m;
+        return ans;
+    }
+}
