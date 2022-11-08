@@ -1,0 +1,44 @@
+1324. Print Words Vertically
+https://leetcode.com/problems/print-words-vertically/description/
+class Solution {
+    public List<String> printVertically(String s) {
+        List<String> ans=new ArrayList<>();
+        int words=0;
+        int f=0;
+        boolean flag=false;
+        for(int i=0;i<s.length();i++)
+        {
+            if(s.charAt(i)==' ')
+            {
+                f=0;
+                flag=true; 
+                words++;              
+                continue;
+            }
+            if(flag==false)
+                ans.add(""+s.charAt(i));
+            else
+            {
+                if(f>=ans.size())
+                {
+                    String t="";
+                    for(int e=0;e<words;e++)
+                    {
+                        t+=" ";
+                    }
+                    ans.add(t);
+                }
+                int n=words-ans.get(f).length();
+                String k="";
+                while(n>0)
+                {
+                    k+=" ";
+                    n--;
+                }
+                ans.set(f,ans.get(f)+k+""+s.charAt(i));
+                f++;
+            }
+        }
+        return ans;
+    }
+}
