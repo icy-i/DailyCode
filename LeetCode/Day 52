@@ -1,0 +1,44 @@
+2225. Find Players With Zero or One Losses
+https://leetcode.com/problems/find-players-with-zero-or-one-losses/description/
+class Solution {
+    public List<List<Integer>> findWinners(int[][] matches) {
+        TreeMap<Integer,Integer> ht=new TreeMap<>();
+        for(int i=0;i<matches.length;i++)
+        {
+            int w=matches[i][0];
+            int l=matches[i][1];
+            if(ht.containsKey(w)==false)
+            {
+                ht.put(w,1);
+            }
+            if(ht.containsKey(l))
+            {
+                if(ht.get(l)!=-1)
+                {
+                    ht.put(l,ht.get(l)-1);
+                }
+            }
+            else
+            {
+                ht.put(l,0);
+            }
+        }
+        List<List<Integer>> ans= new ArrayList<>();
+        ArrayList<Integer> zero=new ArrayList<Integer>();
+        ArrayList<Integer> one=new ArrayList<Integer>();
+        for(Map.Entry<Integer,Integer> entry : ht.entrySet())
+        {
+            if(entry.getValue()==0)
+            {
+                one.add(entry.getKey());
+            }
+            if(entry.getValue()==1)
+            {
+                zero.add(entry.getKey());
+            }
+        }
+        ans.add(zero);
+        ans.add(one);
+        return ans;
+    }
+}
