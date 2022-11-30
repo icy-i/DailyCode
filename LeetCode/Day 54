@@ -1,0 +1,33 @@
+1207. Unique Number of Occurrences
+https://leetcode.com/problems/unique-number-of-occurrences/description/
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.Set;
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        Hashtable<Integer,Integer> keep=new Hashtable<>();
+        for(int i:arr)
+        {
+            if(keep.containsKey(i)==false)
+            {
+                keep.put(i,0);
+            }
+            keep.put(i,keep.get(i)+1);
+        }
+        int [] sr=new int[arr.length];
+        Set<Entry<Integer, Integer> > entrySet = keep.entrySet();
+        for(Entry<Integer, Integer> entry : entrySet)
+        {
+            if(sr[entry.getValue()-1]==1)
+            {
+                return false;
+            }
+            else
+            {
+                sr[entry.getValue()-1]=1;
+            }
+        }
+        return true;
+
+    }
+}
